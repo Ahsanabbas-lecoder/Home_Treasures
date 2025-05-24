@@ -1,0 +1,89 @@
+{
+    "watches": [
+        {
+            "id": 1,
+            "name": "Classic Chronograph",
+            "brand": "Rolex",
+            "description": "A timeless piece that combines elegance with precision engineering. This watch was a gift for my 30th birthday.",
+            "value": 8500,
+            "acquisitionDate": "June 2020",
+            "image": "watch1.jpg"
+        },
+        {
+            "id": 2,
+            "name": "Diver's Professional",
+            "brand": "Omega",
+            "description": "Water-resistant up to 300m, this watch accompanies me on all my aquatic adventures.",
+            "value": 4200,
+            "acquisitionDate": "March 2019",
+            "image": "watch2.jpg"
+        },
+        {
+            "id": 3,
+            "name": "Vintage Leather",
+            "brand": "Tissot",
+            "description": "A vintage-inspired watch with genuine leather strap, perfect for formal occasions.",
+            "value": 1200,
+            "acquisitionDate": "December 2021",
+            "image": "watch3.jpg"
+        }
+    ],
+    "shirts": [
+        {
+            "id": 1,
+            "name": "Silk Dress Shirt",
+            "brand": "Gucci",
+            "description": "Handcrafted Italian silk shirt with mother-of-pearl buttons. My go-to for important meetings.",
+            "value": 650,
+            "acquisitionDate": "January 2022",
+            "image": "shirt1.jpg"
+        },
+        {
+            "id": 2,
+            "name": "Denim Western",
+            "brand": "Levi's",
+            "description": "Vintage denim shirt with western detailing. Found at a thrift store in perfect condition.",
+            "value": 45,
+            "acquisitionDate": "August 2018",
+            "image": "shirt2.jpg"
+        },
+        {
+            "id": 3,
+            "name": "Linen Camp Collar",
+            "brand": "Ralph Lauren",
+            "description": "Breathable linen shirt perfect for summer evenings. The embroidery was done by hand.",
+            "value": 220,
+            "acquisitionDate": "May 2021",
+            "image": "shirt3.jpg"
+        }
+    ],
+    "perfumes": [
+        {
+            "id": 1,
+            "name": "Terre d'Hermès",
+            "brand": "Hermès",
+            "description": "A woody, earthy fragrance with citrus top notes. My signature scent for over 5 years.",
+            "value": 120,
+            "acquisitionDate": "Ongoing",
+            "image": "perfume1.jpg"
+        },
+        {
+            "id": 2,
+            "name": "Bleu de Chanel",
+            "brand": "Chanel",
+            "description": "A fresh yet profound fragrance with notes of citrus, mint and sandalwood.",
+            "value": 95,
+            "acquisitionDate": "February 2020",
+            "image": "perfume2.jpg"
+        },
+        {
+            "id": 3,
+            "name": "Sauvage",
+            "brand": "Dior",
+            "description": "A bold, fresh fragrance with bergamot and ambroxan notes. Perfect for evenings out.",
+            "value": 110,
+            "acquisitionDate": "November 2021",
+            "image": "perfume3.jpg"
+        }
+    ]
+}
