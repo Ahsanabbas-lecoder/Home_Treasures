@@ -1,13 +1,14 @@
-$(document).ready(function() {
+document.addEventListener('DOMContentLoaded', function() {
     // Set current year in footer
-    $('#year').text(new Date().getFullYear());
+    document.getElementById('year').textContent = new Date().getFullYear();
 
     // Navbar scroll effect
-    $(window).scroll(function() {
-        if ($(this).scrollTop() > 100) {
-            $('.navbar').addClass('scrolled');
+    window.addEventListener('scroll', function() {
+        const navbar = document.querySelector('.navbar');
+        if (window.scrollY > 100) {
+            navbar.classList.add('scrolled');
         } else {
-            $('.navbar').removeClass('scrolled');
+            navbar.classList.remove('scrolled');
         }
     });
 
@@ -23,103 +24,115 @@ $(document).ready(function() {
     });
 
     // Load items from JSON
-    $.getJSON('/data/items.json', function(data) {
-        // Count items for stats
-        $('#watch-count').text(data.watches.length);
-        $('#shirt-count').text(data.shirts.length);
-        $('#perfume-count').text(data.perfumes.length);
-
-        // Animate stats counting
-        gsap.to('#watch-count, #shirt-count, #perfume-count', {
-            innerText: function(index) {
-                return index === 0 ? data.watches.length : 
-                       index === 1 ? data.shirts.length : data.perfumes.length;
-            },
-            duration: 2,
-            ease: 'power1.out',
-            snap: { innerText: 1 },
-            scrollTrigger: {
-                trigger: '.stats-box',
-                start: 'top 80%',
-                toggleActions: 'play none none none'
+    fetch('/data/items.json')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
             }
-        });
+            return response.json();
+        })
+        .then(data => {
+            // Count items for stats
+            document.getElementById('watch-count').textContent = data.watches.length;
+            document.getElementById('shirt-count').textContent = data.shirts.length;
+            document.getElementById('perfume-count').textContent = data.perfumes.length;
 
-        // Load watches
-        data.watches.forEach((watch, index) => {
-            $('.watches-container').append(createItemCard(watch, 'watches'));
-            
-            // Animate each item with stagger
-            gsap.to(`.watch-item-${index}`, {
-                opacity: 1,
-                y: 0,
-                duration: 0.5,
-                delay: index * 0.1,
+            // Animate stats counting
+            gsap.to('#watch-count, #shirt-count, #perfume-count', {
+                innerText: function(index) {
+                    return index === 0 ? data.watches.length : 
+                           index === 1 ? data.shirts.length : data.perfumes.length;
+                },
+                duration: 2,
+                ease: 'power1.out',
+                snap: { innerText: 1 },
                 scrollTrigger: {
-                    trigger: `#watches`,
+                    trigger: '.stats-box',
                     start: 'top 80%',
                     toggleActions: 'play none none none'
                 }
             });
-        });
 
-        // Load shirts
-        data.shirts.forEach((shirt, index) => {
-            $('.shirts-container').append(createItemCard(shirt, 'shirts'));
-            
-            gsap.to(`.shirt-item-${index}`, {
-                opacity: 1,
-                y: 0,
-                duration: 0.5,
-                delay: index * 0.1,
-                scrollTrigger: {
-                    trigger: `#shirts`,
-                    start: 'top 80%',
-                    toggleActions: 'play none none none'
-                }
-            });
-        });
-
-        // Load perfumes
-        data.perfumes.forEach((perfume, index) => {
-            $('.perfumes-container').append(createItemCard(perfume, 'perfumes'));
-            
-            gsap.to(`.perfume-item-${index}`, {
-                opacity: 1,
-                y: 0,
-                duration: 0.5,
-                delay: index * 0.1,
-                scrollTrigger: {
-                    trigger: `#perfumes`,
-                    start: 'top 80%',
-                    toggleActions: 'play none none none'
-                }
-            });
-        });
-
-        // Initialize item modal
-        $('.item-detail-btn').click(function() {
-            const itemId = $(this).data('id');
-            const category = $(this).data('category');
-            let item;
-            
-            if (category === 'watches') item = data.watches.find(w => w.id == itemId);
-            if (category === 'shirts') item = data.shirts.find(s => s.id == itemId);
-            if (category === 'perfumes') item = data.perfumes.find(p => p.id == itemId);
-            
-            if (item) {
-                $('#modalItemTitle').text(item.name);
-                $('#modalItemImage').attr('src', `images/${category}/${item.image}`);
-                $('#modalItemDescription').text(item.description);
-                $('#modalItemBrand').text(item.brand);
-                $('#modalItemDate').text(item.acquisitionDate);
-                $('#modalItemValue').text(`$${item.value.toLocaleString()}`);
+            // Load watches
+            data.watches.forEach((watch, index) => {
+                document.querySelector('.watches-container').insertAdjacentHTML('beforeend', createItemCard(watch, 'watches'));
                 
-                const modal = new bootstrap.Modal(document.getElementById('itemModal'));
-                modal.show();
-            }
+                // Animate each item with stagger
+                gsap.to(`.watch-item-${index}`, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.5,
+                    delay: index * 0.1,
+                    scrollTrigger: {
+                        trigger: `#watches`,
+                        start: 'top 80%',
+                        toggleActions: 'play none none none'
+                    }
+                });
+            });
+
+            // Load shirts
+            data.shirts.forEach((shirt, index) => {
+                document.querySelector('.shirts-container').insertAdjacentHTML('beforeend', createItemCard(shirt, 'shirts'));
+                
+                gsap.to(`.shirt-item-${index}`, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.5,
+                    delay: index * 0.1,
+                    scrollTrigger: {
+                        trigger: `#shirts`,
+                        start: 'top 80%',
+                        toggleActions: 'play none none none'
+                    }
+                });
+            });
+
+            // Load perfumes
+            data.perfumes.forEach((perfume, index) => {
+                document.querySelector('.perfumes-container').insertAdjacentHTML('beforeend', createItemCard(perfume, 'perfumes'));
+                
+                gsap.to(`.perfume-item-${index}`, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.5,
+                    delay: index * 0.1,
+                    scrollTrigger: {
+                        trigger: `#perfumes`,
+                        start: 'top 80%',
+                        toggleActions: 'play none none none'
+                    }
+                });
+            });
+
+            // Initialize item modal
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('item-detail-btn')) {
+                    const itemId = e.target.dataset.id;
+                    const category = e.target.dataset.category;
+                    let item;
+                    
+                    if (category === 'watches') item = data.watches.find(w => w.id == itemId);
+                    if (category === 'shirts') item = data.shirts.find(s => s.id == itemId);
+                    if (category === 'perfumes') item = data.perfumes.find(p => p.id == itemId);
+                    
+                    if (item) {
+                        document.getElementById('modalItemTitle').textContent = item.name;
+                        document.getElementById('modalItemImage').src = `images/${category}/${item.image}`;
+                        document.getElementById('modalItemDescription').textContent = item.description;
+                        document.getElementById('modalItemBrand').textContent = item.brand;
+                        document.getElementById('modalItemDate').textContent = item.acquisitionDate;
+                        document.getElementById('modalItemValue').textContent = `$${item.value.toLocaleString()}`;
+                        
+                        const modal = new bootstrap.Modal(document.getElementById('itemModal'));
+                        modal.show();
+                    }
+                }
+            });
+        })
+        .catch(error => {
+            console.error('Error loading JSON:', error);
         });
-    });
 
     // Helper function to create item cards
     function createItemCard(item, category) {
@@ -141,16 +154,20 @@ $(document).ready(function() {
     }
 
     // Smooth scrolling for navigation
-    $('a[href*="#"]').on('click', function(e) {
-        e.preventDefault();
-        
-        $('html, body').animate(
-            {
-                scrollTop: $($(this).attr('href')).offset().top - 70,
-            },
-            500,
-            'linear'
-        );
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - 70;
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        });
     });
 
     // Initialize ScrollTrigger

@@ -74,7 +74,7 @@
             "description": "A fresh yet profound fragrance with notes of citrus, mint and sandalwood.",
             "value": 95,
             "acquisitionDate": "February 2020",
-            "image": "perfume2.jpg"
+            "image": ""
         },
         {
             "id": 3,
@@ -87,3 +87,4 @@
         }
     ]
 }
+
